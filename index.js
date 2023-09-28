@@ -8,7 +8,7 @@ const {
   API_VERSION,
 } = require("./constants");
 
-const PORT = process.env.POST || 3977;
+const PORT = process.env.POST || 80;
 
 mongoose
   .connect(
