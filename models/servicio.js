@@ -14,3 +14,5 @@ const ServicioSchema = mongoose.Schema(
   },
   { versionKey: false }
 );
+
+module.exports = mongoose.model("Servicio", ServicioSchema);
