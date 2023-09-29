@@ -5,23 +5,31 @@ const fs = require("fs");
 function createPortafolio(req, res) {
   const portafolio = new Portafolio(req.body);
   portafolio.created_at = new Date();
-  const miniaturePath = image.getFilePath(req.files.miniature);
-  portafolio.miniature = miniaturePath;
+  if (req.files.miniature !== undefined) {
+    const miniaturePath = image.getFilePath(req.files.miniature);
+    portafolio.miniature = miniaturePath;
+  }
+  if (req.files.imagen1 !== undefined) {
+    const imagePath1 = image.getFilePath(req.files.imagen1);
+    portafolio.imagen1 = imagePath1;
+  }
 
-  const imagePath1 = image.getFilePath(req.files.imagen1);
-  portafolio.imagen1 = imagePath1;
-
-  const imagePath2 = image.getFilePath(req.files.imagen2);
-  portafolio.imagen2 = imagePath2;
-
-  const imagePath3 = image.getFilePath(req.files.imagen3);
-  portafolio.imagen3 = imagePath3;
-
-  const imagePath4 = image.getFilePath(req.files.imagen4);
-  portafolio.imagen4 = imagePath4;
-
-  const imagePath5 = image.getFilePath(req.files.imagen5);
-  portafolio.imagen5 = imagePath5;
+  if (req.files.imagen2 !== undefined) {
+    const imagePath2 = image.getFilePath(req.files.imagen2);
+    portafolio.imagen2 = imagePath2;
+  }
+  if (req.files.imagen3 !== undefined) {
+    const imagePath3 = image.getFilePath(req.files.imagen3);
+    portafolio.imagen3 = imagePath3;
+  }
+  if (req.files.imagen4 !== undefined) {
+    const imagePath4 = image.getFilePath(req.files.imagen4);
+    portafolio.imagen4 = imagePath4;
+  }
+  if (req.files.imagen5 !== undefined) {
+    const imagePath5 = image.getFilePath(req.files.imagen5);
+    portafolio.imagen5 = imagePath5;
+  }
 
   portafolio
     .save()
@@ -35,20 +43,31 @@ function createPortafolio(req, res) {
 
 function getPortafolios(req, res) {
   const { page = 1, limit = 3 } = req.query;
+  const { active } = req.query;
 
   const options = {
     page: parseInt(page),
     limit: parseInt(limit),
-    sort: { created_at: "desc" },
+    sort: { order: "asc" },
   };
 
-  Portafolio.paginate({}, options)
-    .then((portafolios) => {
-      res.status(200).send(portafolios);
-    })
-    .catch((err) => {
-      res.status(400).send("Error al obtener los portafolios");
-    });
+  if (active === undefined) {
+    Portafolio.paginate({}, options)
+      .then((portafolios) => {
+        res.status(200).send(portafolios);
+      })
+      .catch((err) => {
+        res.status(400).send("Error al obtener los portafolios");
+      });
+  } else {
+    Portafolio.paginate({ active }, options)
+      .then((portafolios) => {
+        res.status(200).send(portafolios);
+      })
+      .catch((err) => {
+        res.status(400).send("Error al obtener los portafolios");
+      });
+  }
 }
 
 function updatePortafolio(req, res) {
