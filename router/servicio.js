@@ -14,7 +14,7 @@ api.post(
 );
 api.get("/servicio", ServicioController.getServicios);
 api.patch(
-  "servicio/:id",
+  "/servicio/:id",
   [md_auth.asureAuth, md_upload],
   ServicioController.updateServicio
 );
