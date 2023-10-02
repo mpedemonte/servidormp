@@ -11,6 +11,7 @@ const ServicioSchema = mongoose.Schema(
     },
     order: Number,
     active: Boolean,
+    description: String,
   },
   { versionKey: false }
 );

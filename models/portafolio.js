@@ -18,6 +18,7 @@ const PortafolioSchema = mongoose.Schema(
     imagen5: String,
     active: Boolean,
     order: Number,
+    description: String,
   },
   { versionKey: false }
 );
